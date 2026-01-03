@@ -4,6 +4,9 @@ let comScore = 0;
 const choices = document.querySelectorAll(".choice");
 const msg= document.querySelector("#msg");
 
+const userScorePara =document.querySelector("#user-score");
+const comScorePara =document.querySelector("#comp-score");
+
 const genCompChoice = () => {
     const options = ["rock", "paper", "scissors"];
     const randIdx = Math.floor(Math.random() * 3);
@@ -11,22 +14,27 @@ const genCompChoice = () => {
 }
 
 const drawGame = () => {
-    console.log("Game was draw.");
+    msg.innerText ="Game was Draw. Play again."
+    msg.style.backgroundColor ="#081b31";
 }
 
-const showWinner = (userWin) => {
+const showWinner = (userWin, userChoice, compChoice) => {
     if(userWin) {
-        console.log("you win!");
+        userScore++;
+        userScorePara.innerText = userScore;
+        msg.innerText = `You Win! Your ${userChoice} beats ${compChoice} `;
+        msg.style.backgroundColor ="green";
     }else{
-        console.log("you lose");
+        comScore++;
+        comScorePara.innerText = comScore;
+        msg.innerText = `You lose. ${compChoice} beats your ${userChoice}`;
+        msg.style.backgroundColor ="red"
     }
 }
 
 const playGame = (userChoice) => {
-    console.log("user choice =", userChoice);
     //Generate computer choice
     const compChoice = genCompChoice();
-    console.log("comp choice =", compChoice);
 
     if(userChoice === compChoice) {
         //Draw condition
@@ -43,7 +51,7 @@ const playGame = (userChoice) => {
             //rock, paper
             userWin = compChoice === "rock"? false :true;
         }
-        showWinner(userWin);
+        showWinner(userWin, userChoice, compChoice);
     }
 }
 
